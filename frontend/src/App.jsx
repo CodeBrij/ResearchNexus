@@ -7,32 +7,25 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import PlayGroundPage from "./pages/PlaygroundPage.jsx";
+import AnalyzedFilesPage from "./pages/AnalyzedFilesPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route index element={<IndexPage />} />
-      <Route path="/dashboard">
-        <Route index element={<DashboardPage />} />
-      </Route>
-      <Route path="/community">
-        <Route index element={<Community />} />
-      </Route>
-      <Route path="/playground">
-        <Route index element={<PlayGroundPage />} />
-      </Route>
+      <Route path="playground" element={<PlayGroundPage />} />
+      <Route path="dashboard" element={<AnalyzedFilesPage />} />
     </Route>
   )
 );
 
 function App() {
-
   return (
     <>
-      <RouterProvider router={router} future={{ v7_startTransition: true }}/>
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
       <Toaster />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

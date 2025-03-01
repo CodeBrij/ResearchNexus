@@ -1,8 +1,8 @@
-import MainHero from "../components/MainHero.js";
-import Header from "../components/Header.js";
-import About from "../components/About.js";
-import MainHeroImage from "../components/MainHeroImage.js";
-import Product from "../components/Product.js";
+import MainHero from "../components/MainHero.jsx";
+import Header from "../components/Header.jsx";
+import About from "../components/About.jsx";
+import MainHeroImage from "../components/MainHeroImage.jsx";
+import Product from "../components/Product.jsx";
 export default function IndexPage() {
   return (
     <div

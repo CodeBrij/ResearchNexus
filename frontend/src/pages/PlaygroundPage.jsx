@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import { useCsvFileHandler } from "../hooks/useCsvFileHandler";
 import AskAISection from "../components/AskAISection";
 

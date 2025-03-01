@@ -6,7 +6,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import useGeminiQuery from '../hooks/useGeminiQuery';
-import { useCsvData } from '../hooks/useCsvData';
+import useCsvData from '../hooks/useCsvData';
 
 const AskAISection = ({ csvData }) => {
   const { response, loading: queryLoading, askQuery } = useGeminiQuery();
