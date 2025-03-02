@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi'; // Assuming you're using react-icons for the menu icons
+import { useAuthStore } from '../store/useAuthStore';
 
 const Header = () => {
+const {authUser, checkAuth} = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  console.log({ authUser });
 
   return (
     <div className="navbar md:px-10 self-center items-center">
@@ -69,16 +77,22 @@ const Header = () => {
               to="/playground"
               className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
             >
-              AI Search
+              AI Recommendation
             </Link>
           </li>
           <li className="mx-2">
-            <Link
+            {authUser? <Link
               to="/profile"
               className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
             >
               Profile
-            </Link>
+            </Link> : 
+            <Link
+              to="/login"
+              className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
+            >
+              Login
+            </Link>}
           </li>
         </ul>
       </div>

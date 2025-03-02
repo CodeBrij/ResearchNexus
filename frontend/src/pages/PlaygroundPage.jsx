@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header.jsx";
 import { useCsvFileHandler } from "../hooks/useCsvFileHandler";
 import AskAISection from "../components/AskAISection";
+import toast from "react-hot-toast";
 
 const PlayGroundPage = () => {
   const [fileInfo, setFileInfo] = useState({
@@ -11,14 +12,19 @@ const PlayGroundPage = () => {
     loading: false,
   });
 
-  const { fullCsv, parseCsvFile, error } = useCsvFileHandler();
+  const { parsedData, parseCsvFile, error } = useCsvFileHandler();
 
   const handleFileChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
       if (file.size > 1 * 1024 * 1024) {
-        alert("File size exceeds 1MB. Please upload a smaller file.");
+        toast.error("File size exceeds 1MB. Please upload a smaller file.");
+        return;
+      }
+
+      if (!file.name.toLowerCase().endsWith('.csv')) {
+        toast.error("Please upload a CSV file");
         return;
       }
 
@@ -29,7 +35,10 @@ const PlayGroundPage = () => {
   };
 
   useEffect(() => {
-    if (error) console.error("Error loading CSV data:", error);
+    if (error) {
+      toast.error(error);
+      setFileInfo((prev) => ({ ...prev, uploaded: false, isUploading: false, loading: false }));
+    }
   }, [error]);
 
   return (
@@ -89,10 +98,15 @@ const PlayGroundPage = () => {
             </div>
           </form>
 
-          {fileInfo.loading && <div className="mt-4">Loading CSV...</div>}
+          {fileInfo.loading && (
+            <div className="mt-4 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+              <span className="ml-2">Processing CSV...</span>
+            </div>
+          )}
 
-          {fileInfo.uploaded && fullCsv && !fileInfo.loading && !fileInfo.isUploading && (
-            <AskAISection csvData={[fullCsv]} />
+          {fileInfo.uploaded && parsedData && !fileInfo.loading && !fileInfo.isUploading && (
+            <AskAISection csvData={parsedData} />
           )}
         </div>
       </div>

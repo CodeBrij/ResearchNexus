@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaRobot, FaClipboard } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'; 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import useGeminiQuery from '../hooks/useGeminiQuery';
 import useCsvData from '../hooks/useCsvData';
 
-const AskAISection = ({ csvData }) => {
+const AskAISection = () => {
   const { response, loading: queryLoading, askQuery } = useGeminiQuery();
   const [userQuery, setUserQuery] = useState('');
   const [, setIsQuerySubmitted] = useState(false);
+  const csvData = useCsvData();
   const [responses, setResponses] = useState([]);
 
   const handleQuerySubmit = (e) => {
@@ -21,7 +22,7 @@ const AskAISection = ({ csvData }) => {
       return;
     }
     setIsQuerySubmitted(true);
-    askQuery(userQuery, csvData);
+    askQuery(userQuery);
     setUserQuery('');
   };
 
@@ -52,7 +53,11 @@ const AskAISection = ({ csvData }) => {
           <div
             key={index}
             className="p-4 mb-4 border rounded-lg bg-background text-primary_text shadow-lg"
-            style={{ whiteSpace: 'nowrap', overflowX: 'auto', maxWidth: '100%' }}
+            style={{
+              whiteSpace: 'nowrap', 
+              overflowX: 'auto', 
+              maxWidth: '100%', 
+            }}
           >
             <h5 className="font-semibold text-xl">AI Response {index + 1}:</h5>
             <ReactMarkdown
@@ -74,7 +79,10 @@ const AskAISection = ({ csvData }) => {
 
                   if (isInline) {
                     return (
-                      <code className="bg-gray-200 p-1 rounded-sm text-primary_text" {...props}>
+                      <code
+                        className="bg-gray-200 p-1 rounded-sm text-primary_text"
+                        {...props}
+                      >
                         {children}
                       </code>
                     );
@@ -84,10 +92,12 @@ const AskAISection = ({ csvData }) => {
                     <div className="relative">
                       {copyButton}
                       <SyntaxHighlighter
-                        style={a11yDark}
-                        language="javascript"
-                        className="bg-gray-800 rounded-md p-4"
-                        customStyle={{ overflowX: 'auto' }}
+                        style={a11yDark} 
+                        language="javascript" 
+                        className="bg-gray-800 rounded-md p-4" 
+                        customStyle={{
+                          overflowX: 'auto',
+                        }}
                         {...props}
                       >
                         {codeString}
@@ -95,14 +105,16 @@ const AskAISection = ({ csvData }) => {
                     </div>
                   );
                 },
+
                 p({ children, ...props }) {
-                  if (Array.isArray(children) && children.some((child) => child?.type === 'pre' || child?.type === 'code')) {
+                  if (children && Array.isArray(children) && children.some((child) => child?.type === 'pre' || child?.type === 'code')) {
                     return <div {...props}>{children}</div>;
                   }
                   return <p {...props}>{children}</p>;
                 },
+
                 pre({ children, ...props }) {
-                  return <div {...props}>{children}</div>;
+                  return <div {...props}>{children}</div>;  
                 },
               }}
             >

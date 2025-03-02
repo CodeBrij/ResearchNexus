@@ -99,9 +99,9 @@ export const logout = (req, res) => {
   };
   
 export const updateProfile = async (req, res) => {
-    const { name, email, password, profilePic, role, areaofexpertise, affiliation, linkedin, access } = req.body;
+    const { name, email, profilePic, role, areaofexpertise, affiliation, linkedin, access } = req.body;
     try {
-        if(!name || !email || !password || !role || !areaofexpertise || !affiliation || !linkedin || !access) {
+        if(!name || !email || !role || !areaofexpertise || !affiliation || !linkedin || !access) {
             return res.status(400).json({message: "All fields are required"});
         }
 
@@ -113,15 +113,14 @@ export const updateProfile = async (req, res) => {
         }
 
         const user = await User.findByIdAndUpdate(UserId, {
-            name,
-            email,
-            password,
-            profilePic: uploadProfilePic.url,
-            role,
-            areaofexpertise,
-            affiliation,
-            linkedin,
-            access
+            name: name || user.name,
+            email: email || user.email,
+            profilePic: updatedProfilePic,
+            role: role || user.role,
+            areaofexpertise: areaofexpertise || user.areaofexpertise,
+            affiliation: affiliation || user.affiliation,
+            linkedin: linkedin || user.linkedin,
+            access: access || user.access
         }, {
             new: true
         });
@@ -137,3 +136,13 @@ catch (error) {
 }
 }
 
+export const checkAuth = async(req, res) => {
+    try {
+      res.status(200).json(req.user);
+    } catch (error) {
+      console.log("Error in checkAuth controller: ",error);
+      res.status(500).json({message: 
+        "Internal Server Error: ", error
+      })
+    }
+  };
