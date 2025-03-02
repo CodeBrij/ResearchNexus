@@ -108,13 +108,13 @@ const DashboardPage = () => {
         <input
           type="text"
           placeholder="Enter topic (e.g., Machine Learning) & press Enter"
-          className="input input-bordered input-primary w-full max-w-md text-secondary_text mb-4"
+          className="input input-bordered input-primary w-full max-w-md text-black mb-4"
           onKeyDown={handleQueryChange}
         />
         <input
           type="text"
           placeholder="Search papers by tags..."
-          className="input input-bordered input-primary w-full max-w-md text-secondary_text"
+          className="input input-bordered input-primary w-full max-w-md text-black"
           value={searchTerm}
           onChange={handleSearch}
         />

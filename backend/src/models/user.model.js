@@ -11,7 +11,7 @@ export const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     profilePic: {
         type: String,
@@ -22,7 +22,6 @@ export const userSchema = new mongoose.Schema({
     },
     areaofexpertise: {
         type: String,
-        required: true,
     },
     affiliation:{
         type: String,
@@ -34,7 +33,6 @@ export const userSchema = new mongoose.Schema({
     },
     access:{
         type: Boolean,
-        required: true
     }
 });
 

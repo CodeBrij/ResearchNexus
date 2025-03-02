@@ -10,18 +10,18 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json()); //using to parse json
-app.use(cookieParser()); //to fetch cookie from browser
+app.use(express.json({limit: '50mb'})); 
+app.use(cookieParser()); 
 app.use(cors({
     origin:"http://localhost:5173",
     credentials:true,
 }))
-const PORT = process.env.PORT; //taking port from env
+const PORT = process.env.PORT; 
 const __dirname = path.resolve();
 
-app.use("/api/auth", authRoutes) //defining api
+app.use("/api/auth", authRoutes); 
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server connected on port ${PORT}`);
     connectDB();
-})
+});

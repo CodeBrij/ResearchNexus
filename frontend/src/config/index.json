@@ -11,7 +11,7 @@
     "mainHero": {
       "title": "Welcome to ResearchNexus",
       "subtitle": "Empower Your ResearchNexus Journey",
-      "description": "ResearchNexus is a AI-powered community for the research community, where users can access AI models and datasets. It enables secure collaboration using annotation tools, with features like room creation and a playground for adding and discussing datasets, all while ensuring data privacy and security.",
+      "description": "ResearchNexus is a AI-powered tool for the research community, where users can access research papers and datasets. It enables secure collaboration using annotation tools, with features like room creation and a playground for adding and discussing datasets, all while ensuring data privacy and security.",
       "img": "/assets/images/hero_image.png",
       "primaryAction": {
         "text": "Dashboard",

@@ -1,10 +1,10 @@
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { generateTokens } from "../lib/utils.js";
-import cloudinary from "cloudinary";
+import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
-    const { name, email, password, profilePic, role, areaofexpertise, affiliation, linkedin, access } = req.body;
+    const { name, email, password} = req.body;
     try {
         if(!name || !email || !password) {
             return res.status(400).json({message: "All fields are required"});
@@ -26,12 +26,6 @@ export const signup = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            profilePic,
-            role,
-            areaofexpertise,
-            affiliation,
-            linkedin,
-            access
         });
 
         if (newUser) {
@@ -39,10 +33,9 @@ export const signup = async (req, res) => {
             generateTokens(newUser._id, res);
       
             await newUser.save();
-      
             res.status(201).json({
               _id: newUser._id,
-              fullName: newUser.fullName,
+              name: newUser.name,
               email: newUser.email,
               profilePic: newUser.profilePic,
             });
@@ -74,7 +67,6 @@ export const login = async (req, res) => {
 
         //generate jwt token
         generateTokens(user._id, res);
-      
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -99,50 +91,82 @@ export const logout = (req, res) => {
   };
   
 export const updateProfile = async (req, res) => {
-    const { name, email, profilePic, role, areaofexpertise, affiliation, linkedin, access } = req.body;
     try {
-        if(!name || !email || !role || !areaofexpertise || !affiliation || !linkedin || !access) {
-            return res.status(400).json({message: "All fields are required"});
+        const { name, email, role, areaofexpertise, affiliation, linkedin, access, profilePic } = req.body;
+        const userId = req.user._id;
+
+        // Validate required fields
+        if(!name || !email || !role || !areaofexpertise || !affiliation || !linkedin) {
+            return res.status(400).json({message: "Please fill all required fields"});
         }
 
-        const UserId = req.user._id;
-
-        const uploadProfilePic = await cloudinary.uploader.upload(profilePic)
-        if(!uploadProfilePic) {
-            return res.status(400).json({message: "Error uploading profile picture"});
+        // Check if email is already taken by another user
+        const existingUser = await User.findOne({ email, _id: { $ne: userId } });
+        if (existingUser) {
+            return res.status(400).json({message: "Email is already taken"});
         }
 
-        const user = await User.findByIdAndUpdate(UserId, {
-            name: name || user.name,
-            email: email || user.email,
-            profilePic: updatedProfilePic,
-            role: role || user.role,
-            areaofexpertise: areaofexpertise || user.areaofexpertise,
-            affiliation: affiliation || user.affiliation,
-            linkedin: linkedin || user.linkedin,
-            access: access || user.access
-        }, {
-            new: true
-        });
+        // Handle profile picture upload if provided
+        let profilePicUrl = undefined;
+        if (profilePic && profilePic.startsWith('data:image')) {
+            try {
+                const uploadResponse = await cloudinary.uploader.upload(profilePic, {
+                    folder: 'profile_pics',
+                    use_filename: true,
+                    unique_filename: true,
+                });
+                profilePicUrl = uploadResponse.secure_url;
+            } catch (error) {
+                console.error("Error uploading profile picture:", error);
+                return res.status(400).json({message: "Failed to upload profile picture"});
+            }
+        }
 
-        res.status(200).json({
-            message: "Profile updated successfully",
-            user
-        });
+        // Update user
+        const updateData = {
+            name,
+            email,
+            role,
+            areaofexpertise,
+            affiliation,
+            linkedin,
+            access: access || false
+        };
+
+        // Only add profilePic to update if we got a new one
+        if (profilePicUrl) {
+            updateData.profilePic = profilePicUrl;
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error("Error in updateProfile Controller:", error);
+        res.status(500).json({ message: "Failed to update profile" });
     }
-catch (error) {
-    console.log("Error in updateProfile Controller: ", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
-}
-}
+};
 
 export const checkAuth = async(req, res) => {
-    try {
-      res.status(200).json(req.user);
-    } catch (error) {
-      console.log("Error in checkAuth controller: ",error);
-      res.status(500).json({message: 
-        "Internal Server Error: ", error
-      })
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "Not authorized" });
     }
-  };
+    res.status(200).json(user);
+  } catch (error) {
+    console.log("Error in checkAuth controller: ", error);
+    res.status(500).json({ 
+      message: "Internal Server Error",
+      error: error.message 
+    });
+  }
+};

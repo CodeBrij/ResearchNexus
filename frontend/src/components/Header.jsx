@@ -90,6 +90,14 @@ const Header = () => {
           </li>
           <li className="mx-2">
             <Link
+              to="/dashboard"
+              className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
+            >
+              Collaborative Annotating
+            </Link>
+          </li>
+          <li className="mx-2">
+            <Link
               to="/airecommendation"
               className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
             >
