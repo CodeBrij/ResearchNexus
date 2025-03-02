@@ -1,6 +1,6 @@
 {
     "company": {
-      "name": "CryptoDataMart",
+      "name": "ResearchNexus",
       "logo": "/assets/images/logo.png"
     },
   
@@ -9,26 +9,26 @@
       "href": "#"
     },
     "mainHero": {
-      "title": "Welcome to CryptoDataMart",
-      "subtitle": "Empower Your CryptoDataMart Journey",
-      "description": "CryptoDataMart is a Blockchain-powered marketplace for the GenAI community, where users can buy, sell, and access AI models and datasets. It enables secure collaboration using smart contracts, with features like decentralized licensing and a playground for adding and discussing datasets, all while ensuring data privacy and security.",
+      "title": "Welcome to ResearchNexus",
+      "subtitle": "Empower Your ResearchNexus Journey",
+      "description": "ResearchNexus is a AI-powered community for the research community, where users can access AI models and datasets. It enables secure collaboration using annotation tools, with features like room creation and a playground for adding and discussing datasets, all while ensuring data privacy and security.",
       "img": "/assets/images/hero_image.png",
       "primaryAction": {
         "text": "Dashboard",
         "to": "/dashboard"
       },
       "secondaryAction": {
-        "text": "Community",
-        "to": "/community"
+        "text": "",
+        "to": ""
       }
     },
     "product": {
-      "title": "CryptoDataMart Features",
+      "title": "ResearchNexus Features",
       "items": [
         {
-          "title": "AI Model & Dataset Marketplace",
-          "description": "Explore and trade AI models and datasets securely. Directly buy or sell resources, ensuring full ownership and transparency with decentralized licensing and blockchain-powered transactions.",
-          "img": "/assets/images/dashboard.png"
+          "title": "ArXiv Research Paper Analyzer",
+          "description": "Explore and search research papers in collaboration with ArXiv Research Papers. Search efficiently using tags filtered by AI-generated keywords using NLP.",
+          "img": "/assets/dashboard.png"
         },
         {
           "title": "Collaborative Playground",
@@ -36,13 +36,13 @@
           "img": "/assets/images/playground.png"
         },
         {
-          "title": "AI-Generated Dataset Descriptions",
-          "description": "Each dataset listed on CryptoDataMart comes with an AI-generated description, providing detailed insights and context to help users understand and evaluate the data more efficiently.",
-          "img": "/assets/images/ai_description.png"
+          "title": "AI Recommendation System",
+          "description": "Our recommendation system uses machine learning to generate recommendations based on user preferences and contextual information, helping users find relevant research papers to explore and discuss.",
+          "img": "/assets/images/ai_tags.png"
         },
         {
-          "title": "Auto-Generated Tags for Datasets",
-          "description": "When uploading datasets, CryptoDataMart automatically generates relevant tags, making it easier for users to discover and categorize datasets based on key characteristics and content.",
+          "title": "Collaborative Annotating",
+          "description": "Our collaborative annotating feature allows users to add annotations to datasets, share them with others, and discuss the content in real-time. This feature enhances the research experience by enabling collaborative learning and knowledge sharing.",
           "img": "/assets/images/ai_tags.png"
         }
       ]

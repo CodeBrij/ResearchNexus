@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiMenu, FiX } from 'react-icons/fi'; // Assuming you're using react-icons for the menu icons
+import { FiMenu, FiX } from 'react-icons/fi';
 import { useAuthStore } from '../store/useAuthStore';
 
 const Header = () => {
-const {authUser, checkAuth} = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { authUser } = useAuthStore();
+  
+  useEffect(() => {
+    console.log("Auth state in header:", authUser);
+  }, [authUser]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-
-  console.log({ authUser });
 
   return (
     <div className="navbar md:px-10 self-center items-center">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-2xl font-bold text-primary hover:text-secondary">
-          CryptoDataMart
+        ResearchNexus
         </Link>
       </div>
       <div className="flex-none md:hidden dropdown dropdown-bottom dropdown-open dropdown-end">
@@ -40,7 +39,7 @@ const {authUser, checkAuth} = useAuthStore();
                 to="/dashboard"
                 className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-primary_text hover:text-secondary"
               >
-                Dashboard
+                ArXiv Papers
               </Link>
             </li>
             <li>
@@ -50,6 +49,23 @@ const {authUser, checkAuth} = useAuthStore();
               >
                 Playground
               </Link>
+            </li>
+            <li>
+              {authUser ? (
+                <Link
+                  to="/profile"
+                  className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-primary_text hover:text-secondary"
+                >
+                  Profile
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-primary_text hover:text-secondary"
+                >
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         )}
@@ -61,7 +77,7 @@ const {authUser, checkAuth} = useAuthStore();
               to="/dashboard"
               className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
             >
-              Dashboard
+              ArXiv Paper
             </Link>
           </li>
           <li className="mx-2">
@@ -74,25 +90,28 @@ const {authUser, checkAuth} = useAuthStore();
           </li>
           <li className="mx-2">
             <Link
-              to="/playground"
+              to="/airecommendation"
               className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
             >
               AI Recommendation
             </Link>
           </li>
           <li className="mx-2">
-            {authUser? <Link
-              to="/profile"
-              className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
-            >
-              Profile
-            </Link> : 
-            <Link
-              to="/login"
-              className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
-            >
-              Login
-            </Link>}
+            {authUser ? (
+              <Link
+                to="/profile"
+                className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
+              >
+                Profile
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="text-primary_text hover:text-secondary text-sm font-medium md:font-semibold md:text-md"
+              >
+                Login
+              </Link>
+            )}
           </li>
         </ul>
       </div>

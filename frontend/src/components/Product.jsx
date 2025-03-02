@@ -1,5 +1,8 @@
 import config from "../config/index.json";
-
+import one from "../assets/images/one.png";
+import two from "../assets/images/two.png";
+import three from "../assets/images/three.jpg";
+import four from "../assets/images/four.jpg";
 const Product = () => {
   const { product } = config;
   const [firstItem, secondItem, thirdItem, fourthItem] = product.items;
@@ -14,7 +17,7 @@ const Product = () => {
             <span
               key={index}
               className={index % 2 ? "text-primary" : "text-primary_text"}
-            >
+            >   
               {word}{" "}
             </span>
           ))}
@@ -36,7 +39,7 @@ const Product = () => {
               <div className="flex justify-center border-t border-base-300">
                 <img
                   className=""
-                  src={firstItem?.img}
+                  src={two}
                   alt={firstItem?.title}
                 />
               </div>
@@ -54,7 +57,7 @@ const Product = () => {
               <div className="flex justify-center border-t border-base-300">
                 <img
                   className=""
-                  src={secondItem?.img}
+                  src={one}
                   alt={secondItem?.title}
                 />
               </div>
@@ -86,7 +89,7 @@ const Product = () => {
               <div className="flex justify-center border-t border-base-300">
                 <img
                   className=""
-                  src={thirdItem?.img}
+                  src={four}
                   alt={thirdItem?.title}
                 />
               </div>
@@ -102,7 +105,7 @@ const Product = () => {
               <div className="flex justify-center border-t border-base-300">
                 <img
                   className=""
-                  src={fourthItem?.img}
+                  src={three}
                   alt={fourthItem?.title}
                 />
               </div>

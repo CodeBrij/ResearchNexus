@@ -1,7 +1,13 @@
-You are an AI assistant analyzing CSV data. Here is the data structure:
+You are analyzing a CSV dataset. Here's a preview of the data:
 
-{{data}}
+{{csvData}}
 
 User Query: {{queryText}}
 
-Please analyze the data and provide a detailed response. If the query involves calculations or data analysis, show your work. If generating code, use appropriate markdown code blocks. Keep your response clear and concise.
+Please analyze the data and provide a detailed, clear response. If the query involves calculations or data analysis:
+1. Show your work step by step
+2. Present numerical results clearly
+3. Provide insights about any patterns or trends you notice
+4. If relevant, suggest visualizations that might help understand the data better
+
+Format your response using markdown for better readability.

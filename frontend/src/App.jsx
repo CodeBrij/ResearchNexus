@@ -2,28 +2,41 @@ import { Toaster } from "react-hot-toast";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore.js";
-import Spinner from "./components/Spinner.jsx"; // Import Loader component
+import Spinner from "./components/Spinner.jsx";
 import IndexPage from "./pages/Index.jsx";
 import PlayGroundPage from "./pages/PlaygroundPage.jsx";
-import AnalyzedFilesPage from "./pages/AnalyzedFilesPage.jsx";
+import DashboardPage from "./pages/Dashboard.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import AIRecommendation from "./components/AIRecommendation.jsx";
 
-// ✅ Create a ProtectedRoute component
 const ProtectedRoute = ({ children }) => {
-  const { authUser } = useAuthStore();
-  return authUser ? children : <Navigate to="/login" />;
+  const { authUser, isCheckingAuth } = useAuthStore();
+  
+  if (isCheckingAuth) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
+  
+  if (!authUser) {
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
 };
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
-  }, []); // Removed dependency on checkAuth to avoid unnecessary re-renders
+  }, [checkAuth]);
 
-  if (isCheckingAuth && !authUser) {
+  if (isCheckingAuth) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Spinner />
@@ -36,9 +49,30 @@ function App() {
       <Route path="/">
         <Route index element={<IndexPage />} />
         <Route path="playground" element={<PlayGroundPage />} />
-        {/* ✅ Using ProtectedRoute for better readability */}
-        <Route path="dashboard" element={<ProtectedRoute><AnalyzedFilesPage /></ProtectedRoute>} />
-        <Route path="profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="airecommendation"
+          element={
+            <ProtectedRoute>
+              <AIRecommendation />
+            </ProtectedRoute>
+          }
+        />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="login" element={<LoginPage />} />
       </Route>

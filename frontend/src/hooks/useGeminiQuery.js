@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-const API_KEY = "AIzaSyBChAK_4ODI1fv5eosNcN74RUiTadU9EEc"
+const API_KEY = "AIzaSyBChAK_4ODI1fv5eosNcN74RUiTadU9EEc";
 
 const useGeminiQuery = () => {
   const [response, setResponse] = useState(null);
@@ -9,10 +9,10 @@ const useGeminiQuery = () => {
   const [error, setError] = useState(null);
   const [queryPrompt, setQueryPrompt] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     const loadQueryPrompt = async () => {
       try {
-        const res = await fetch('/query_prompt.txt');
+        const res = await fetch('/query_prompt.txt'); 
         if (res.ok) {
           const text = await res.text();
           setQueryPrompt(text);
@@ -36,7 +36,7 @@ const useGeminiQuery = () => {
     setError(null);
 
     try {
-      const csvPreview = csvData.slice(0, 5);
+      const csvPreview = csvData.slice(0, 5); 
       const formattedCsvData = csvPreview
         .map((row) => Object.values(row).join(", "))
         .join("\n");

@@ -1,21 +1,7 @@
 import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import useListingContract from "../hooks/useListingContract";
 
 const DatasetTitle = ({ datasetId, creationTime, tags, likedByUser }) => {
-  const { likeDataset, removeLikeDataset } = useListingContract();
-
-  const handleLikeClick = async () => {
-    try {
-      if (likedByUser) {
-        await removeLikeDataset(datasetId);
-      } else {
-        await likeDataset(datasetId);
-      }
-    } catch (error) {
-      console.error("Error toggling like status:", error);
-    }
-  };
 
   return (
     <>
