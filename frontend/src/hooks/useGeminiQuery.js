@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-const API_KEY = "AIzaSyBChAK_4ODI1fv5eosNcN74RUiTadU9EEc";
+const API_KEY = "api_key";
 
 const useGeminiQuery = () => {
   const [response, setResponse] = useState(null);
